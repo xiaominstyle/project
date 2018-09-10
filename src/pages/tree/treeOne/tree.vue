@@ -83,6 +83,7 @@ export default {
   },
   components: { TreeRender },
   methods: {
+    addEventNodeRules() {},
     /*渲染函数*/
     renderContent(h, { node, data, store }) {
       let that = this; //指向vue
