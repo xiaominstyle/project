@@ -9,33 +9,32 @@
           <i class="el-icon-search"></i>
         </span>
       </div>
-      <div class="data-list-search" v-if="!collecteData.length">
+      <div class="data-list-search" v-if="!data5.length">
         <p class='data-title' style='text-align:center'>暂无数据</p>
       </div>
-      <ul class="data-parent">
+      <div class="data-parent">
         <VueScroll>
-          <li class="data-parent-list" v-for='(item,index) in collecteData' :key="index" :class="{'activeTitle':idxTitle == item.id}" @click="choosed(item.id)">
-            <span class="data-parent-text" @click.stop="open(item,index)">
-              <i class="icon iconfont icon-xiala1" v-if="item.openFlag"></i>
-              <i class="icon iconfont icon-xiala" v-else></i>
-              <span>{{item.label}}</span>
-            </span>
-            <ul class="data-child" ref="liCon">
-              <li class="data-child-list" v-for="subItem in sublistsData" :key="subItem.id" :class="{'active':idx == subItem.id}" @click.stop="check(subItem.id)">
-                <span class="data-parent-text">{{subItem.datasetname}}</span>
-                <span class="data-parent-num">({{subItem.selecttablesnum}})</span>
-                <span class="data-btn">
-                  <i title='编辑' type='text' class="icon iconfont icon-bianji" @click.stop="edit(subItem.id)"></i>
-                  <i title='删除' type='text' class="icon iconfont icon-shanchu" @click.stop="remove(subItem.id)"></i>
+          <!-- <el-tree :data="data5" node-key="id" default-expand-all :expand-on-click-node="false" :render-content="renderContent">
+          </el-tree> -->
+          <el-tree :data="data5" node-key="id" default-expand-all :expand-on-click-node="false" ref="tree" @node-click="check">
+            <span class="custom-tree-node" slot-scope="{ node, data }">
+              <!-- <i :class="data.className"></i> -->
+              <span>
+                <i :class="data.className"></i> &nbsp; {{ node.label }}
+              </span>
+              <template v-if="data">
+                <span class="operate-btn">
+                  <el-button type="text" size="medium" class="el-icon-edit" @click.stop="()=> edit()">
+                  </el-button>
+                  <el-button type="text" size="medium" class="el-icon-delete" @click.stop="() => remove(node, data)">
+                  </el-button>
                 </span>
-              </li>
-              <div class="data-list-search" v-if="!sublistsData.length">
-                <p class='data-title' style='text-align:center'>暂无数据</p>
-              </div>
-            </ul>
-          </li>
+              </template>
+
+            </span>
+          </el-tree>
         </VueScroll>
-      </ul>
+      </div>
     </div>
     <!-- 左侧数据列表 end -->
 
@@ -109,57 +108,77 @@ import Vue from "vue";
 export default {
   name: "data-collection",
   data() {
+    const treeData = [
+      {
+        id: 1,
+        label: "一级 1",
+        className: "group-class tree-icon",
+        children: [
+          {
+            id: 4,
+            label: "二级 1-1",
+            className: "child-class tree-icon",
+            children: [
+              {
+                id: 9,
+                label: "三级 1-1-1",
+                className: "child-sub-class tree-icon"
+              },
+              {
+                id: 10,
+                label: "三级 1-1-2",
+                className: "child-sub-class tree-icon"
+              }
+            ]
+          },
+          {
+            id: 11,
+            label: "二级 1-1",
+            className: "child-class tree-icon"
+          }
+        ]
+      },
+      {
+        id: 2,
+        label: "一级 2",
+        className: "group-class tree-icon",
+        children: [
+          {
+            id: 5,
+            label: "二级 2-1",
+            className: "child-class tree-icon"
+          },
+          {
+            id: 6,
+            label: "二级 2-2",
+            className: "child-class tree-icon"
+          }
+        ]
+      },
+      {
+        id: 3,
+        label: "一级 3",
+        className: "group-class tree-icon",
+        children: [
+          {
+            id: 7,
+            label: "二级 3-1",
+            className: "child-class tree-icon"
+          },
+          {
+            id: 8,
+            label: "二级 3-2",
+            className: "child-class tree-icon"
+          }
+        ]
+      }
+    ];
     return {
+      data5: JSON.parse(JSON.stringify(treeData)),
       liConHeight: 0, //左侧列表收起时的高度
       showIndex: null,
       searchInput: "",
-      // 左侧数据列表
-      collecteData: [
-        {
-          id: "1",
-          label: "数据集"
-        },
-        {
-          id: "2",
-          label: "数据集2"
-        },
-        {
-          id: "3",
-          label: "数据集3"
-        }
-      ],
-      sublistsData: [
-        {
-          id: 1,
-          datasetname: "hhh",
-          selecttablesnum: "2"
-        },
-        {
-          id: 2,
-          datasetname: "pg",
-          selecttablesnum: "6"
-        },
-        {
-          id: 3,
-          datasetname: "nice",
-          selecttablesnum: "2"
-        },
-        {
-          id: 4,
-          datasetname: "sweet",
-          selecttablesnum: "6"
-        },
-        {
-          id: 5,
-          datasetname: "apple",
-          selecttablesnum: "2"
-        },
-        {
-          id: 6,
-          datasetname: "origang",
-          selecttablesnum: "6"
-        }
-      ],
+
       show: true,
       // 右侧form表单数据参数
       form: {
@@ -266,6 +285,11 @@ export default {
 
     //查看
     check(id) {
+      console.log("查看=" + this.$refs.tree.getCheckedKeys());
+      console.log("查看=" + this.$refs.tree.getCurrentNode());
+      console.log("查看=" + this.$refs.tree.getCurrentKey());
+      id = this.$refs.tree.getCurrentKey();
+      console.log("查看=" + id);
       this.infor = "查看数据集";
       this.nameDisabled = true;
       this.sourceDisabled = true;
@@ -276,11 +300,14 @@ export default {
       this.editTabShow = false;
       this.dataShow = true;
       this.dataNull = false;
-      this.idx = id;
-      this.getcheckSetData(id);
+      // this.idx = id;
+      // this.getcheckSetData(id);
     },
     // 编辑按钮点击事件
     edit(id) {
+      console.log("编辑=" + this.$refs.tree.getCurrentKey());
+      id = this.$refs.tree.getCurrentKey();
+      console.log("编辑=" + id);
       this.infor = "编辑数据集";
       this.nameDisabled = false;
       this.sourceDisabled = false;
@@ -291,8 +318,8 @@ export default {
       this.editTabShow = true;
       this.dataShow = true;
       this.dataNull = false;
-      this.getSetData(id);
-      this.getSource();
+      // this.getSetData(id);
+      // this.getSource();
       this.datasetId = id;
     },
     // 获取左侧数据列表
@@ -643,26 +670,66 @@ export default {
     // 分组名点击事件
     choosed(id) {
       this.idxTitle = id;
+    },
+    append(data) {
+      const newChild = { id: id++, label: "testtest", children: [] };
+      if (!data.children) {
+        this.$set(data, "children", []);
+      }
+      data.children.push(newChild);
+    },
+
+    remove(node, data) {
+      const parent = node.parent;
+      const children = parent.data.children || parent.data;
+      const index = children.findIndex(d => d.id === data.id);
+      children.splice(index, 1);
+    },
+    renderContent(h, { node, data, store }) {
+      return (
+        <span class="custom-tree-node">
+          <i class={data.className} />
+          <span>{node.label}</span>
+          <span>
+            <el-button
+              size="mini"
+              type="text"
+              on-click={() => this.append(data)}
+            >
+              Append
+            </el-button>
+            <el-button
+              size="mini"
+              type="text"
+              on-click={() => this.remove(node, data)}
+            >
+              Delete
+            </el-button>
+          </span>
+        </span>
+      );
+      // var createElement = arguments[0];
+      // var level = arguments[1].node.level;
+      // if (level == 1) {
+      //   return createElement("span", [
+      //     createElement("i", { attrs: { class: "el-icon-date" } }),
+      //     createElement("span", "     "),
+      //     createElement("span", arguments[1].node.label)
+      //   ]);
+      // } else if (level == 2) {
+      //   return createElement("span", [
+      //     createElement("i", { attrs: { class: "el-icon-goods" } }),
+      //     createElement("span", "     "),
+      //     createElement("span", arguments[1].node.label)
+      //   ]);
+      // } else {
+      //   return createElement("span", [
+      //     // createElement("i", { attrs: { class: "el-icon-goods" } }),
+      //     createElement("span", "     "),
+      //     createElement("span", arguments[1].node.label)
+      //   ]);
+      // }
     }
-    // 折叠
-    // showHide(index) {
-    //   let contant = document.getElementsByClassName("data-child")[index]; //这里我们通过参数index来让浏览器判断你点击的是哪一个列表
-    //   let height = contant.getBoundingClientRect().height; //获取页面元素的当前高度
-    //   document.getElementsByClassName("select-icon")[
-    //     index
-    //   ].style.transform = !!height ? "rotateX(180deg)" : "rotateX(0deg)";
-    //   if (!!height) {
-    //     contant.style.height = height + "px";
-    //     let f = document.body.offsetHeight; //强制相应dom重绘，使最新的样式得到应用
-    //     contant.style.height = "0px";
-    //   } else {
-    //     contant.style.height = "auto";
-    //     height = contant.getBoundingClientRect().height;
-    //     contant.style.height = "0";
-    //     let f = document.body.offsetHeight;
-    //     contant.style.height = height + "px";
-    //   }
-    // }
   },
   // computed: {
   //   ifTrue() {
@@ -815,7 +882,7 @@ li {
     width: calc(~"76% - 1px");
     border-left: 1px solid #ccc;
     .data-add {
-      height: 60px;
+      height: 40px;
       line-height: 40px;
       font-size: 18px;
       color: #a6a6a6;
@@ -931,5 +998,48 @@ li {
   .el-checkbox__label
   span {
   color: #fff !important;
+}
+// 树形组件样式
+.el-tree-node__content {
+  height: 40px !important;
+}
+.custom-tree-node {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  padding-right: 8px;
+  .operate-btn {
+    display: none;
+  }
+}
+.el-tree-node__content:hover {
+  .operate-btn {
+    display: block;
+  }
+}
+.tree-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+  vertical-align: middle;
+}
+.group-class {
+  //图标设置
+  background: url("../../../assets/img/logo.png") no-repeat 100%;
+  background-size: 100%;
+}
+.child-class {
+  //图标设置
+  background: url("../../../assets/img/img.jpg") no-repeat 100%;
+  background-size: 100%;
+}
+
+.child-sub-class {
+  //图标设置
+  background: url("../../../assets/img/user.jpg") no-repeat 100%;
+  background-size: 100%;
 }
 </style>
