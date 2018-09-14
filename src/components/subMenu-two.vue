@@ -187,6 +187,18 @@ export default {
           ]
         },
         {
+          isShow: true,
+          icon: "el-icon-printer",
+          index: "8",
+          title: "穿梭框案例",
+          subs: [
+            {
+              index: "transferTree",
+              title: "树形穿梭框"
+            }
+          ]
+        },
+        {
           icon: "el-icon-location",
           index: "mapbox",
           title: "地图可视化"

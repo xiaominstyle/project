@@ -22,14 +22,13 @@
               <span>
                 <i :class="data.className"></i> &nbsp; {{ node.label }}
               </span>
-              <template v-if="data">
-                <span class="operate-btn">
-                  <el-button type="text" size="medium" class="el-icon-edit" @click.stop="()=> edit()">
-                  </el-button>
-                  <el-button type="text" size="medium" class="el-icon-delete" @click.stop="() => remove(node, data)">
-                  </el-button>
-                </span>
-              </template>
+
+              <span class="operate-btn">
+                <el-button type="text" size="medium" class="el-icon-edit" @click.stop="()=> edit(node,data)">
+                </el-button>
+                <el-button type="text" size="medium" class="el-icon-delete" @click.stop="() => remove(node, data)">
+                </el-button>
+              </span>
 
             </span>
           </el-tree>
@@ -304,7 +303,7 @@ export default {
       // this.getcheckSetData(id);
     },
     // 编辑按钮点击事件
-    edit(id) {
+    edit(data, id) {
       console.log("编辑=" + this.$refs.tree.getCurrentKey());
       id = this.$refs.tree.getCurrentKey();
       console.log("编辑=" + id);

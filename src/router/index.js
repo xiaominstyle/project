@@ -203,6 +203,14 @@ export default new Router({
           meta: {
             title: '树形4',
           }
+        },
+        {
+          path: '/transferTree',
+          name: '穿梭框案例',
+          component: resolve => require(['../pages/transfer/transferTree.vue'], resolve),
+          meta: {
+            title: '树形穿梭框',
+          }
         }
 
       ]
