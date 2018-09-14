@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <!-- 使用树形穿梭框组件 -->
-    <tree-transfer :title="title" :from_data='fromData' :to_data='toData' :defaultProps="{label:'label'}" @addBtn='add' @removeBtn='remove' :mode='mode' height='540px' filter openAll>
+    <tree-transfer :title="title" :from_data='fromData' :to_data='toData' :defaultProps="{label:'label'}" @addBtn='add' @removeBtn='remove' :mode='mode' height='540px' filter openAll  :render-content="renderContent">
     </tree-transfer>
   </div>
 </template>
@@ -141,6 +141,30 @@ export default {
       console.log("fromData:", fromData);
       console.log("toData:", toData);
       console.log("obj:", obj);
+    },
+    // 树形结构自定义节点
+    renderContent(){
+      var createElement = arguments[0];
+      var level = arguments[1].node.level;
+      if (level == 1) {
+        return createElement("span", [
+          createElement("i", { attrs: { class: "el-icon-date" } }),
+          createElement("span", "     "),
+          createElement("span", arguments[1].node.label)
+        ]);
+      } else if (level == 2) {
+        return createElement("span", [
+          createElement("i", { attrs: { class: "el-icon-goods" } }),
+          createElement("span", "     "),
+          createElement("span", arguments[1].node.label)
+        ]);
+      } else {
+        return createElement("span", [
+          createElement("i", { attrs: { class: "el-icon-edit-outline" } }),
+          createElement("span", "     "),
+          createElement("span", arguments[1].node.label)
+        ]);
+      }
     }
   }
 };
