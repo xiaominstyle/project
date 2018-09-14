@@ -62,7 +62,7 @@ export default {
             },
             {
               id: "2-2",
-              pid: "1",
+              pid: "2",
               label: "二级 2-2",
               children: [
                 {
@@ -88,24 +88,24 @@ export default {
           children: [
             {
               id: "3-1",
-              pid: "2",
+              pid: "3",
               label: "二级 3-1",
               children: []
             },
             {
               id: "3-2",
-              pid: "2",
+              pid: "3",
               label: "二级 3-2",
               children: [
                 {
                   id: "3-2-1",
-                  pid: "2-2",
+                  pid: "3-2",
                   children: [],
                   label: "三级 3-2-1"
                 },
                 {
                   id: "3-2-2",
-                  pid: "2-2",
+                  pid: "3-2",
                   children: [],
                   label: "三级 3-2-2"
                 }
@@ -156,5 +156,17 @@ export default {
   border-radius: 5px;
   vertical-align: middle;
   /* background: red; */
+}
+.el-tree-node__content:hover {
+  /* background-color: #f5f7fa; */
+  color: #278df6;
+}
+.el-tree-node:focus > .el-tree-node__content {
+  background-color: #f5f7fa;
+  color: #278df6;
+}
+.transfer-title {
+  background: #4b63a6 !important;
+  color: #fff !important;
 }
 </style>

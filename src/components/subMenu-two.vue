@@ -164,7 +164,7 @@ export default {
         },
         {
           isShow: true,
-          icon: "el-icon-printer",
+          icon: "el-icon-circle-plus-outline",
           index: "7",
           title: "树形结构",
           subs: [
@@ -188,7 +188,7 @@ export default {
         },
         {
           isShow: true,
-          icon: "el-icon-printer",
+          icon: "el-icon-sort",
           index: "8",
           title: "穿梭框案例",
           subs: [
