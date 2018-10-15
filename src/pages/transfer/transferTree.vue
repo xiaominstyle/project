@@ -7,7 +7,8 @@
 </template>
 
 <script>
-import treeTransfer from "el-tree-transfer"; // 引入
+// import treeTransfer from "el-tree-transfer"; // 引入
+import treeTransfer from "../../components/TransferTree/transfer-extend.vue"; // 引入
 export default {
   name: "",
   components: { treeTransfer },
@@ -15,33 +16,33 @@ export default {
     return {
       title: ["待选表", "已选表"],
       mode: "transfer", // transfer addressList
-      // 待选表数据参数(父级id的值作为子级的pid)
+      // 待选表数据参数(父级id的值作为子级的parentId)
       fromData: [
         {
           id: "1",
-          pid: 0,
+          parentId: 0,
           label: "一级 1",
           children: [
             {
               id: "1-1",
-              pid: "1",
+              parentId: "1",
               label: "二级 1-1",
               children: []
             },
             {
               id: "1-2",
-              pid: "1",
+              parentId: "1",
               label: "二级 1-2",
               children: [
                 {
                   id: "1-2-1",
-                  pid: "1-2",
+                  parentId: "1-2",
                   children: [],
                   label: "三级 1-2-1"
                 },
                 {
                   id: "1-2-2",
-                  pid: "1-2",
+                  parentId: "1-2",
                   children: [],
                   label: "三级 1-2-2"
                 }
@@ -51,29 +52,29 @@ export default {
         },
         {
           id: "2",
-          pid: 1,
+          parentId: 1,
           label: "一级 2",
           children: [
             {
               id: "2-1",
-              pid: "2",
+              parentId: "2",
               label: "二级 2-1",
               children: []
             },
             {
               id: "2-2",
-              pid: "2",
+              parentId: "2",
               label: "二级 2-2",
               children: [
                 {
                   id: "2-2-1",
-                  pid: "2-2",
+                  parentId: "2-2",
                   children: [],
                   label: "三级 2-2-1"
                 },
                 {
                   id: "2-2-2",
-                  pid: "2-2",
+                  parentId: "2-2",
                   children: [],
                   label: "三级 2-2-2"
                 }
@@ -83,33 +84,33 @@ export default {
         },
         {
           id: "3",
-          pid: 2,
+          parentId: 2,
           label: "一级 3",
           children: [
             {
               id: "3-1",
-              pid: "3",
+              parentId: "3",
               label: "二级 3-1",
               children: []
             },
             {
               id: "3-2",
-              pid: "3",
+              parentId: "3",
               label: "二级 3-2",
               children: [
                 {
                   id: "3-2-1",
-                  pid: "3-2",
+                  parentId: "3-2",
                   children: [
                     {
                       id: "4-1",
-                      pid: "3-2-1",
+                      parentId: "3-2-1",
                       children: [],
                       label: "四级 4-1"
                     },
                     {
                       id: "4-2",
-                      pid: "3-2-1",
+                      parentId: "3-2-1",
                       children: [],
                       label: "四级 4-2"
                     }
@@ -118,7 +119,7 @@ export default {
                 },
                 {
                   id: "3-2-2",
-                  pid: "3-2",
+                  parentId: "3-2",
                   children: [],
                   label: "三级 3-2-2"
                 }
