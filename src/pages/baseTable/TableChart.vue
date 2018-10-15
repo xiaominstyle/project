@@ -1,6 +1,8 @@
 <template>
   <div style="padding:20px;" id="app">
     <div class="panel panel-primary">
+      <el-button type="primary" icon="search" @click="selected">选中</el-button>
+      <Table ref="table" :user="users"></Table>
       <div class="panel-heading">用户管理</div>
       <table border="1" class="table table-bordered table-striped text-center">
         <thead>
@@ -25,6 +27,7 @@
 </template>
 
 <script>
+import Table from "./baseTable.vue";
 export default {
   name: "",
   data() {
@@ -32,14 +35,20 @@ export default {
       heads: { name: "姓名", age: "年龄" },
       user: { name: "", age: "", school: "" },
       users: [
-        { name: "李磊", age: "25", school: "洛阳理工" },
-        { name: "张成", age: "23", school: "桂林电子科技" },
-        { name: "炼心", age: "22", school: "江西电子科技" }
+        { name: "李磊", date: "25", address: "洛阳理工" },
+        { name: "张成", date: "23", address: "桂林电子科技" },
+        { name: "炼心", date: "22", address: "江西电子科技" }
       ]
     };
   },
-  components: {},
-  methods: {}
+  components: {
+    Table
+  },
+  methods: {
+    selected() {
+      this.$refs.table.search();
+    }
+  }
 };
 </script>
 

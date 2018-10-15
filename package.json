@@ -13,6 +13,8 @@
     "echarts": "^4.1.0",
     "el-tree-transfer": "^1.8.8",
     "element-ui": "^2.4.6",
+    "form-create": "^1.4.2",
+    "iview": "^3.1.1",
     "mapbox-gl": "^0.48.0",
     "mavon-editor": "^2.6.17",
     "vue": "^2.5.17",

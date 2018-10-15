@@ -44,13 +44,13 @@
     <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
       <el-form ref="form" :model="form" label-width="50px">
         <el-form-item label="日期">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.date" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
+          <el-date-picker type="date" placeholder="选择日期" v-model="form.code" value-format="yyyy-MM-dd" style="width: 100%;"></el-date-picker>
         </el-form-item>
         <el-form-item label="姓名">
           <el-input v-model="form.name"></el-input>
         </el-form-item>
         <el-form-item label="地址">
-          <el-input v-model="form.address"></el-input>
+          <el-input v-model="form.namespace"></el-input>
         </el-form-item>
 
       </el-form>
@@ -79,14 +79,77 @@ export default {
       url: "./static/vuetable.json",
       tableData: [
         {
-          date: "2018-2-18",
-          name: "张三",
-          address: "北京海淀区海淀南路"
+          id: "123",
+          gmtCreate: null,
+          gmtModified: null,
+          creator: null,
+          editor: null,
+          code: "newcode",
+          name: "newnamae",
+          description: null,
+          classifierId: null,
+          parentId: null,
+          isRoot: null,
+          leaf: null,
+          classifierName: null,
+          namespace: "/b1129f2d16e84499ab9b9b5b4916d276/123",
+          string_1: null,
+          string_2: null,
+          string_3: null,
+          string_4: null,
+          string_5: null,
+          string_6: null,
+          string_7: null,
+          string_8: null,
+          string_9: null,
+          string_10: null,
+          string_11: null,
+          string_12: null,
+          string_13: null,
+          string_14: null,
+          string_15: null,
+          string_16: null,
+          string_17: null,
+          string_18: null,
+          string_19: null,
+          string_20: null
         },
         {
-          date: "2018-2-18",
-          name: "王小二",
-          address: "北京海淀区海淀南路"
+          id: "e972e653ee0547a99fde31ef4daea562",
+          gmtCreate: null,
+          gmtModified: null,
+          creator: null,
+          editor: null,
+          code: "dw_database",
+          name: "dw_database",
+          description: null,
+          classifierId: null,
+          parentId: null,
+          isRoot: null,
+          leaf: null,
+          classifierName: null,
+          namespace:
+            "/8eb7876511e24812b14ba3a0f1adf6fd/9e50435be8234a999aa3356e63bdd71f/e972e653ee0547a99fde31ef4daea562",
+          string_1: null,
+          string_2: null,
+          string_3: null,
+          string_4: null,
+          string_5: null,
+          string_6: null,
+          string_7: null,
+          string_8: null,
+          string_9: null,
+          string_10: null,
+          string_11: null,
+          string_12: null,
+          string_13: null,
+          string_14: null,
+          string_15: null,
+          string_16: null,
+          string_17: null,
+          string_18: null,
+          string_19: null,
+          string_20: null
         }
       ],
       cur_page: 1,
@@ -179,6 +242,12 @@ export default {
     },
     search() {
       this.is_search = true;
+      console.log(this.tableData);
+      let setData = [];
+      for (var i = 0; i < this.tableData.length; i++) {
+        setData.push(this.tableData[i]);
+      }
+      this.toggleSelection(setData);
     },
     formatter(row, column) {
       return row.address;
@@ -213,6 +282,16 @@ export default {
     handleSelectionChange(val) {
       this.multipleSelection = val;
     },
+    // 表格选中状态
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
     // 保存编辑
     saveEdit() {
       this.$set(this.tableData, this.idx, this.form);
@@ -224,8 +303,22 @@ export default {
       this.tableData.splice(this.idx, 1);
       this.$message.success("删除成功");
       this.delVisible = false;
+    },
+    // 备份
+
+    selected() {
+      let setData = [];
+      for (var i = 0; i < this.tableData.length; i++) {
+        setData.push(this.tableData[i]);
+      }
+      console.log(setData);
+      // this.$refs.multipletable.toggleAllSelection();
+      setData.forEach(row => {
+        this.$refs.multipletable.toggleRowSelection(row);
+      });
     }
-  }
+  },
+  mounted() {}
 };
 </script>
 

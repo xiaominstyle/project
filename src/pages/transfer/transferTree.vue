@@ -1,7 +1,7 @@
 <template>
   <div class="">
     <!-- 使用树形穿梭框组件 -->
-    <tree-transfer :title="title" :from_data='fromData' :to_data='toData' :defaultProps="{label:'label'}" @addBtn='add' @removeBtn='remove' :mode='mode' height='540px' filter openAll  :render-content="renderContent">
+    <tree-transfer :title="title" :from_data='fromData' :to_data='toData' :defaultProps="{label:'label'}" @addBtn='add' @removeBtn='remove' :mode='mode' height='540px' filter openAll :render-content="renderContent">
     </tree-transfer>
   </div>
 </template>
@@ -15,7 +15,7 @@ export default {
     return {
       title: ["待选表", "已选表"],
       mode: "transfer", // transfer addressList
-      // 待选表数据参数
+      // 待选表数据参数(父级id的值作为子级的pid)
       fromData: [
         {
           id: "1",
@@ -100,7 +100,20 @@ export default {
                 {
                   id: "3-2-1",
                   pid: "3-2",
-                  children: [],
+                  children: [
+                    {
+                      id: "4-1",
+                      pid: "3-2-1",
+                      children: [],
+                      label: "四级 4-1"
+                    },
+                    {
+                      id: "4-2",
+                      pid: "3-2-1",
+                      children: [],
+                      label: "四级 4-2"
+                    }
+                  ],
                   label: "三级 3-2-1"
                 },
                 {
@@ -143,7 +156,7 @@ export default {
       console.log("obj:", obj);
     },
     // 树形结构自定义节点
-    renderContent(){
+    renderContent() {
       var createElement = arguments[0];
       var level = arguments[1].node.level;
       if (level == 1) {
@@ -158,14 +171,26 @@ export default {
           createElement("span", "     "),
           createElement("span", arguments[1].node.label)
         ]);
-      } else {
+      } else if (level == 3) {
         return createElement("span", [
           createElement("i", { attrs: { class: "el-icon-edit-outline" } }),
           createElement("span", "     "),
           createElement("span", arguments[1].node.label)
         ]);
+      } else {
+        return createElement("span", [
+          createElement("i", { attrs: { class: "el-icon-picture" } }),
+          createElement("span", "     "),
+          createElement("span", arguments[1].node.label)
+        ]);
       }
     }
+  },
+  mounted() {
+    console.log(this.fromData);
+    console.log(this.toData);
+    // this.add();
+    // this.remove();
   }
 };
 </script>

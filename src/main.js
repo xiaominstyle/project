@@ -10,6 +10,12 @@ import axios from 'axios';
 import "babel-polyfill";
 import echarts from 'echarts';
 import '../src/assets/iconfont/iconfont.css';
+//
+import iView from 'iview';
+import 'iview/dist/styles/iview.css';
+import formCreat from 'form-create'
+Vue.use(iView);
+Vue.use(formCreat)
 
 
 Vue.config.productionTip = false;

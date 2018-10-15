@@ -103,6 +103,10 @@ export default {
                 }
               ]
             },
+            {
+              index: "formcreate",
+              title: "表单-动态创建"
+            },
 
             {
               index: "upload",

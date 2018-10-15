@@ -86,6 +86,15 @@ export default new Router({
         },
         {
           // 图片上传组件
+          path: '/formcreate',
+          name: '表单创建',
+          component: resolve => require(['../pages/baseForm/formCreate.vue'], resolve),
+          meta: {
+            title: '表单创建'
+          }
+        },
+        {
+          // 图片上传组件
           path: '/upload',
           name: '文件上传',
           component: resolve => require(['../pages/baseForm/upload.vue'], resolve),
